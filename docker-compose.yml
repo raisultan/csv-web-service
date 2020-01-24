@@ -9,6 +9,7 @@ services:
     volumes:
       - ./app:/app
       - static_volume:/static
+      - media_volume:/media
     command: >
       sh -c "python3 manage.py wait_for_db &&
               python3 manage.py migrate &&
@@ -34,3 +35,4 @@ services:
 volumes:
   postgres-data:
   static_volume:
+  media_volume:
