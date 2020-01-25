@@ -2,16 +2,20 @@ from django.db import models
 
 
 class Item(models.Model):
-  name = models.CharField(max_length=255)
+  name = models.CharField(max_length=255, unique=True)
 
   def __str__(self):
     return self.name
 
 
 class Client(models.Model):
-  username = models.CharField(max_length=255)
+  username = models.CharField(max_length=255, unique=True)
   spent_money = models.IntegerField(default=0)
-  gems = models.ManyToManyField(Item, related_name='clients')
+  gems = models.ManyToManyField(
+    Item,
+    related_name='clients',
+    blank=True
+  )
 
   def __str__(self):
     return self.username
