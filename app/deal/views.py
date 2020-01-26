@@ -17,12 +17,7 @@ class FileUploadAPIView(generics.CreateAPIView):
     serializer = self.get_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    print(serializer.data)
-    # file = serializer.validated_data['file']
-    # decoded_file = file.read().decode()
-    # io_string = io.StringIO(decoded_file)
-    path = serializer.data['file'].split('media/')[1]
-    print(path)
+    path = serializer.data['file'].split('localhost')[1]
     process_file.delay(path)
 
     return Response(status=status.HTTP_204_NO_CONTENT)
