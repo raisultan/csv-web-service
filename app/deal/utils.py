@@ -43,7 +43,5 @@ def create_most_valuable_clients_list(model, attr):
             gems_filter_set.add(gem)
 
     client.gems.filter(name__in=gems_filter_set)
-    print(client.username)
-    print(client.gems.filter(name__in=gems_filter_set))
 
   return clients

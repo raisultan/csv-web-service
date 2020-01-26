@@ -1,4 +1,21 @@
+import os
+import uuid
+import datetime
+
 from django.db import models
+
+
+def csv_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/deals/', filename)
+
+class DealHistoryFile(models.Model):
+  file = models.FileField(upload_to=csv_file_path)
+
+  def __str__(self):
+    return f'{datetime.datetime.now()}'
 
 
 class Item(models.Model):

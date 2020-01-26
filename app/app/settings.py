@@ -25,7 +25,9 @@ SECRET_KEY = 'ce*r!vw2w7ncs2p$6g4_^^^@zc4z-3f!n@&m&x$29$h2pfk_5)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+]
 
 
 # Application definition
@@ -130,3 +132,9 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = '/static/'
 MEDIA_ROOT = '/media/'
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

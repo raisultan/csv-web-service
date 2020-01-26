@@ -1,13 +1,14 @@
 from rest_framework import serializers
 
-from core.models import Item, Client
+from core.models import Item, Client, DealHistoryFile
 
 
-class FileUploadSerializer(serializers.Serializer):
-  file = serializers.FileField()
+class FileUploadSerializer(serializers.ModelSerializer):
 
   class Meta:
-    fields = ('file', )
+    model = DealHistoryFile
+    fields = ('id', 'file')
+    read_only_fields = ('id', )
 
 
 class ItemSerializer(serializers.ModelSerializer):
