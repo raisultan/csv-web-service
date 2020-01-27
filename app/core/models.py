@@ -11,6 +11,7 @@ def csv_file_path(instance, filename):
 
     return os.path.join('uploads/deals/', filename)
 
+
 class DealHistoryFile(models.Model):
   file = models.FileField(upload_to=csv_file_path)
 

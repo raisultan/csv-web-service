@@ -1,5 +1,4 @@
 import csv
-import io
 
 from django.db.models import F
 from django.core.exceptions import ObjectDoesNotExist
@@ -33,7 +32,6 @@ def process_file(path):
           item = Item(name=row[1])
           item.save()
 
-        #TODO: consider adding try/except
         deal = Deal(
           client=Client.objects.get(username=row[0]),
           item=Item.objects.get(name=row[1]),
@@ -42,7 +40,8 @@ def process_file(path):
           date=row[4],
         )
         deal.save()
-        Client.objects.filter(username=deal.client).update(spent_money=F('spent_money') + deal.total)
+        Client.objects.filter(username=deal.client) \
+          .update(spent_money=F('spent_money') + deal.total)
         if check_item_existence_for_client(
           client=deal.client,
           item=deal.item

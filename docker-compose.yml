@@ -9,7 +9,8 @@ services:
       - static_volume:/static
       - media_volume:/media
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "python3 manage.py wait_for_db &&
+              python manage.py migrate &&
               python manage.py collectstatic --no-input --clear &&
               gunicorn app.wsgi:application -w 4 --bind 0.0.0.0:8000"
     environment:
@@ -56,11 +57,9 @@ services:
       - redis
     networks:
       - db_network
-      - nginx_network
 
   nginx:
     image: nginx:1.13
-    # change port to 80:80 in production
     ports:
       - 8000:80
     volumes:
