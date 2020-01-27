@@ -10,13 +10,18 @@ class FileUploadAPIView(generics.CreateAPIView):
   serializer_class = serializers.FileUploadSerializer
 
   def post(self, request, *args, **kwargs):
-    serializer = self.get_serializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    path = serializer.data['file'].split('localhost')[1]
-    process_file.delay(path)
+    if str(request.FILES['file']).endswith('.csv'):
+      serializer = self.get_serializer(data=request.data)
+      if serializer.is_valid():
+        serializer.save()
+        path = serializer.data['file'].split('localhost')[1]
+        process_file.delay(path)
 
-    return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+      else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+      return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class MostValuableClientsListView(generics.ListAPIView):
